@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="container">
+<h1>Hello there!</h1>
+<p>Please enter your name to sign up:</p>
+<label>
+  <input type="text" id="name" onsubmit="submitName()">
+</label>
+<button name="submit" title="submit" onsubmit="submitName()" onclick="submitName()">Submit</button>
+</body>
+</html>
+
+<script>
+  async function submitName() {
+      let name = document.getElementById("name").value;
+
+      console.log("sending name \"" + name + "\" to database");
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", "/api/user", true);
+      xhr.setRequestHeader("name", name)
+      await xhr.send();
+      let base64 = btoa(name);
+      window.location.href = "/welcome?name=" + base64;
+  }
+</script>
